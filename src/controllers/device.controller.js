@@ -37,24 +37,24 @@ exports.findAll = (req, res) => {
     })
 };
 
-// Find a single device with a deviceId
+// Find a single device with a id
 exports.findById = (req, res) => {
-    Device.findById(req.params.deviceId, (err, data) => {
+    Device.findById(req.params.id, (err, data) => {
         if(err) {
             if(err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found device with id ${req.params.deviceId}.`
+                    message: `Not found device with id ${req.params.id}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Error retrieving device with id " + req.params.deviceId 
+                    message: "Error retrieving device with id " + req.params.id 
                 });
             } 
         } else res.send(data);
     });
 };
 
-// Update a device identified by the deviceId in the request
+// Update a device identified by the id in the request
 exports.update = (req, res) => {
     //Validate request
     if(!req.body) {
@@ -64,17 +64,17 @@ exports.update = (req, res) => {
     }
 
     Device.update(
-        req.params.deviceId,
+        req.params.id,
         new Device(req.body),
         (err, data) => {
             if(err) {
                 if(err.kind === "not_found") {
                     res.status(404).send({
-                        message: `Not found device with id ${req.params.deviceId}.`
+                        message: `Not found device with id ${req.params.id}.`
                     });
                 } else {
                     res.status(500).send({
-                        message: "Error updating device with id " + req.params.deviceId
+                        message: "Error updating device with id " + req.params.id
                     });
                 } 
             } else res.send(data);
@@ -83,17 +83,17 @@ exports.update = (req, res) => {
 };
 
 
-// Delete a device with the specified deviceId in the request
+// Delete a device with the specified id in the request
 exports.delete = (req, res) => {
-    Device.remove(req.params.deviceId, (err, data) => {
+    Device.remove(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found Device with id ${req.params.deviceId}.`
+                    message: `Not found Device with id ${req.params.id}.`
                 });
             } else {
                 res.status(500).send({
-                    message: "Could not delete Device with id " + req.params.deviceId
+                    message: "Could not delete Device with id " + req.params.id
                 });
             }
         } else res.send({ message: `Device was deleted successfully!` });

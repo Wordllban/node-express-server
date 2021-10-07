@@ -1,18 +1,22 @@
-module.exports = app => {
-    const devices = require('../controllers/device.controller.js');
+const express = require('express')
 
-    // Create a new device
-    app.post("/devices", devices.create);
+const router = express.Router()
 
-    // Retrieve all devices
-    app.get("/devices", devices.findAll);
+const deviceController = require('../controllers/device.controller.js');
 
-    // Retrieve a single devices with deviceId
-    app.get("/devices/:deviceId", devices.findById);
+// Create a new device
+router.post("/", deviceController.create);
 
-    // Update a device with deviceId 
-    app.put("/devices/:deviceId", devices.update);
+// Retrieve all devices
+router.get("/", deviceController.findAll);
 
-    // Delete a device with deviceId
-    app.delete("/devices/:deviceId", devices.delete);
-}
+// Retrieve a single devices with id
+router.get("/:id", deviceController.findById);
+
+// Update a device with id 
+router.put("/:id", deviceController.update);
+
+// Delete a device with id
+router.delete("/:id", deviceController.delete);
+
+module.exports = router

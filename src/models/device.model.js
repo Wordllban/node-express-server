@@ -18,8 +18,8 @@ Device.create = (newDevice, result) => {
     });
 };
 
-Device.findById = (deviceId, result) => {
-    sql.query(`SELECT * FROM devices WHERE id = ${deviceId}`, (err, res) =>{
+Device.findById = (id, result) => {
+    sql.query(`SELECT * FROM devices WHERE id = ${id}`, (err, res) =>{
         if(err) {
             console.log("error: ", err);
             result(err, null);
