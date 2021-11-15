@@ -41,7 +41,7 @@ exports.findAll = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message: 
-                   "Some error occurred while retrieving devices."
+                    "Some error occurred while retrieving devices."
             });
         });
 };
@@ -117,4 +117,54 @@ exports.delete = (req, res) => {
         })
     })
 
+};
+
+exports.filterByName = (req, res) => {
+    Device.findAll({
+        where: {
+            model: {
+                [Op.substring]: req.query.model
+            }
+        },
+        attributes: ['id', 'model', 'price']
+    })
+    .then(data => {
+        if(data) {
+            res.send(data);
+        } else {
+            res.status(404).send({
+                message: `Cannot find Devices with model ${model}.`
+            });
+        }
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Error retrieving Devices with model " + model
+        });
+    });
+};
+
+exports.filterByPrice = (req, res) => {
+    Device.findAll({
+        where: {
+            price: {
+                [Op.gt]: req.query.price
+            }
+        },
+        attributes: ['id', 'model' ,'price']
+    })  
+    .then(data => {
+        if(data) {
+            res.send(data);
+        } else {
+            res.status(404).send({
+                message: `Cannot find Device with price ${price}.`
+            });
+        }
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Error retrieving Device with id " + price
+        });
+    });
 };

@@ -9,6 +9,10 @@ module.exports = app => {
     // Retrieve all Devices
     router.get("/", devices.findAll);
   
+    // Retrieve filtered Devices
+    router.get("model=model&", devices.filterByName);
+    router.get("price=price&", devices.filterByPrice);
+
     // Retrieve a single Device with id
     router.get("/:id", devices.findOne);
   
@@ -19,5 +23,5 @@ module.exports = app => {
     router.delete("/:id", devices.delete);
   
     // using a middleware
-    app.use('/api/v1/devices', router);
+    app.use('/api/v2/devices', router);
   };

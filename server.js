@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const cors = require("cors");
 
-var forms = multer();
+const forms = multer();
 
 // create express app
 const app = express();
@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 const deviceRoutes =  require("./src/routes/device.routes")(app);
 
 // setup server port
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
