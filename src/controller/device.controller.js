@@ -32,7 +32,8 @@ exports.create = (req, res) => {
 // Retrieve all Device from the database.
 exports.findAll = (req, res) => {
     const model = req.query.model;
-    var condition = model ? { model: { [Op.like] : `%${model}` } } : null;
+    const price = req.query.price;
+    const condition = model && price ? { model: { [Op.like] : `%${model}%` }, price: {[Op.gte] : price} } : null;
 
     Device.findAll({ where: condition })
         .then(data => {
@@ -117,54 +118,4 @@ exports.delete = (req, res) => {
         })
     })
 
-};
-
-exports.filterByName = (req, res) => {
-    Device.findAll({
-        where: {
-            model: {
-                [Op.substring]: req.query.model
-            }
-        },
-        attributes: ['id', 'model', 'price']
-    })
-    .then(data => {
-        if(data) {
-            res.send(data);
-        } else {
-            res.status(404).send({
-                message: `Cannot find Devices with model ${model}.`
-            });
-        }
-    })
-    .catch(err => {
-        res.status(500).send({
-            message: "Error retrieving Devices with model " + model
-        });
-    });
-};
-
-exports.filterByPrice = (req, res) => {
-    Device.findAll({
-        where: {
-            price: {
-                [Op.gt]: req.query.price
-            }
-        },
-        attributes: ['id', 'model' ,'price']
-    })  
-    .then(data => {
-        if(data) {
-            res.send(data);
-        } else {
-            res.status(404).send({
-                message: `Cannot find Device with price ${price}.`
-            });
-        }
-    })
-    .catch(err => {
-        res.status(500).send({
-            message: "Error retrieving Device with id " + price
-        });
-    });
 };

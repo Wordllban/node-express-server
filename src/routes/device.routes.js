@@ -8,10 +8,6 @@ module.exports = app => {
   
     // Retrieve all Devices
     router.get("/", devices.findAll);
-  
-    // Retrieve filtered Devices
-    router.get("model=model&", devices.filterByName);
-    router.get("price=price&", devices.filterByPrice);
 
     // Retrieve a single Device with id
     router.get("/:id", devices.findOne);
