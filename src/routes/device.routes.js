@@ -1,22 +1,23 @@
-const express = require('express')
+module.exports = app => {
+    const devices = require("../controller/device.controller");
+  
+    var router = require("express").Router();
+  
+    // Create a new Device
+    router.post("/", devices.create);
+  
+    // Retrieve all Devices
+    router.get("/", devices.findAll);
 
-const router = express.Router()
-
-const deviceController = require('../controllers/device.controller.js');
-
-// Create a new device
-router.post("/", deviceController.create);
-
-// Retrieve all devices
-router.get("/", deviceController.findAll);
-
-// Retrieve a single devices with id
-router.get("/:id", deviceController.findById);
-
-// Update a device with id 
-router.put("/:id", deviceController.update);
-
-// Delete a device with id
-router.delete("/:id", deviceController.delete);
-
-module.exports = router
+    // Retrieve a single Device with id
+    router.get("/:id", devices.findOne);
+  
+    // Update a Device with id
+    router.put("/:id", devices.update);
+  
+    // Delete a Device with id
+    router.delete("/:id", devices.delete);
+  
+    // using a middleware
+    app.use('/api/v2/devices', router);
+  };
